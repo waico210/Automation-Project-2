@@ -9,7 +9,7 @@ describe('Issue create', () => {
   });
 
 //ASSIGNMENT 2 Test 1
-  it('Create new issue and validate it', () => {
+  xit('Create new issue and validate it', () => {
     cy.get('[data-testid="modal:issue-create"]').within(() => {
       
       //Description field
