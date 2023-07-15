@@ -28,7 +28,7 @@ describe('Tests for delete issue and cancel deleting.', () => {
       it('Task 2: Canceling deleting progress', () => {
         //Find and click Delete button.
         cy.get('[data-testid="icon:trash"]').click();
-        //Conirm delete
+        //Cancel delete
         cy.get('[data-testid="modal:confirm"]').contains('Cancel').click();
         //Assert that delete confirmation window is closed.
         cy.get('[data-testid="modal:confirm"]').should('not.exist');
