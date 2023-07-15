@@ -34,7 +34,7 @@ describe('Tests for delete issue and cancel deleting.', () => {
         cy.get('[data-testid="modal:confirm"]').should('not.exist');
         //Close issue detail view. There is two X buttons, this select first button.
         cy.get('[data-testid="icon:close"]').first().click();
-        //Assert that issue is stinn in the list.
+        //Assert that issue is still in the list.
         cy.get('[data-testid="list-issue"]').should('contain', issueName);
         
       });
