@@ -25,7 +25,7 @@ describe('Tests for delete issue and cancel deleting.', () => {
         cy.get('[data-testid="list-issue"]').should('not.contain', issueName);
       });
 
-      it('Task 2: Cancelig deleting progress', () => {
+      it('Task 2: Canceling deleting progress', () => {
         //Find and click Delete button.
         cy.get('[data-testid="icon:trash"]').click();
         //Conirm delete
