@@ -17,12 +17,11 @@ describe('Tests for delete issue and cancel deleting.', () => {
         cy.get('[data-testid="icon:trash"]').click();
         //Conirm delete
         cy.get('[data-testid="modal:confirm"]').contains('Delete issue').click();
-        //Waiting for the page to load. Chage the time longer if needed!
-        cy.wait(15000);
         //Assert that delete confirmation window is closed.
         cy.get('[data-testid="modal:confirm"]').should('not.exist');
         //Assert that deleted issue is not in the list.
-        cy.get('[data-testid="list-issue"]').should('not.contain', issueName);
+        cy.reload();
+        cy.get('[data-testid="board-list:backlog"]').should('not.contain', issueName);
       });
 
       it('Task 2: Canceling deleting progress', () => {
@@ -35,7 +34,7 @@ describe('Tests for delete issue and cancel deleting.', () => {
         //Close issue detail view. There is two X buttons, this select first button.
         cy.get('[data-testid="icon:close"]').first().click();
         //Assert that issue is still in the list.
-        cy.get('[data-testid="list-issue"]').should('contain', issueName);
+        cy.get('[data-testid="board-list:backlog"]').should('contain', issueName);
         
       });
     

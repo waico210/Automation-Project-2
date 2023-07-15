@@ -16,10 +16,21 @@ describe('Issue delete', () => {
   const issueTitle = 'This is an issue of type: Task.';
 
   it('Should delete issue successfully', () => {
-    //add steps to delete issue
+    //deleting issue
+    IssueModal.clickDeleteButton();
+    IssueModal.confirmDeletion();
+    //Assert that deleted issue is not in the list.
+    IssueModal.ensureIssueIsNotVisibleOnBoard(issueTitle)    
   });
 
   it('Should cancel deletion process successfully', () => {
-    //add steps to start deletion proces but cancel it
+    //Start deleting ang cancel it.
+    IssueModal.clickDeleteButton();
+    IssueModal.cancelDeletion();
+    //Close issue detail view.
+    IssueModal.closeDetailModal();
+    //Assert that issue is still in the list.
+    IssueModal.ensureIssueIsVisibleOnBoard(issueTitle)
+
   });
 });
