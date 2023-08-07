@@ -3,14 +3,17 @@ const description = 'This is test issue'
 const estimatedHouers = 10
 const changedHouers = 20
 
-
-describe('Time test', () => {
+describe('Issue create', () => {
     before(() => {
         cy.visit('/');
         cy.url().should('eq', `${Cypress.env('baseUrl')}project/board`).then((url) => {
             //System will already open issue creating modal in beforeEach block  
             cy.visit(url + '/board?modal-issue-create=true');
         });
+    });
+
+    it('Time estimation functionality', () => {
+        // Create new issue
         cy.get('[data-testid="modal:issue-create"]').within(() => {
             cy.get('.ql-editor').type(description);
             cy.get('input[name="title"]').type(title);
@@ -33,40 +36,48 @@ describe('Time test', () => {
                 .find('p')
                 .contains(title);
         });
-    });
 
-    it('Time estimation functionality', () => {
+
+
+
         cy.get('[data-testid="list-issue"]').contains(title).click();
         // Assert no time is added
         cy.get('[data-testid="modal:issue-details"]').should("contain", "No time logged");
         // Add 10 hours
-        cy.get('[placeholder="Number"]').click().type(estimatedHouers);
         cy.get('[data-testid="icon:stopwatch"]').click();
-        cy.get('[data-testid="modal:tracking"]').contains('Done').click();
-        cy.get('[data-testid="icon:close"]').eq(0).click();
-        // Assert 10 hours is added
-        cy.get('[data-testid="list-issue"]').contains(title).click();
-        cy.get('[data-testid="modal:issue-details"]').should("contain", estimatedHouers + 'h estimated');
-        //Change hours to 20
-        cy.get('[placeholder="Number"]').click().type(changedHouers);
-        cy.get('[data-testid="icon:stopwatch"]').click();
-        cy.get('[data-testid="modal:tracking"]').contains('Done').click();
-        cy.get('[data-testid="icon:close"]').eq(0).click();
-        // Assert 20 hours is added
-        cy.get('[data-testid="list-issue"]').contains(title).click();
-        cy.get('[data-testid="modal:issue-details"]').should("contain", changedHouers + 'h estimated');
-        // Remove estimation
-        cy.get('[placeholder="Number"]').click().clear();
-        cy.get('[data-testid="icon:stopwatch"]').click();
+        cy.get('[placeholder="Number"]').eq(1).click().type(estimatedHouers);
         cy.get('[data-testid="modal:tracking"]').contains('Done').click();
         cy.get('[data-testid="icon:close"]').eq(0).click();
 
+        // Assert 1o hours is added
         cy.get('[data-testid="list-issue"]').contains(title).click();
-        cy.get('[data-testid="modal:issue-details"]').should("contain","No time logged");
-        cy.get('[data-testid="modal:issue-details"]').should('contain', 'Number');
+        cy.get('[data-testid="modal:issue-details"]').should("contain", estimatedHouers + 'h logged')
+
+        // change time to 20 hours
+        cy.get('[data-testid="icon:stopwatch"]').click();
+        cy.get('[placeholder="Number"]').eq(1).click().clear().type(changedHouers);
+        cy.get('[data-testid="modal:tracking"]').contains('Done').click();
         cy.get('[data-testid="icon:close"]').eq(0).click();
+
+        // Assert 20  hours is added
+        cy.get('[data-testid="list-issue"]').contains(title).click();
+        cy.get('[data-testid="modal:issue-details"]').should("contain", changedHouers + 'h logged')
+
+        //Clear time
+        cy.get('[data-testid="icon:stopwatch"]').click();
+        cy.get('[placeholder="Number"]').eq(1).click().clear();
+        cy.get('[data-testid="modal:tracking"]').contains('Done').click();
+        cy.get('[data-testid="icon:close"]').eq(0).click();
+
+        //Assert time is ceared
+        cy.get('[data-testid="list-issue"]').contains(title).click();
+        cy.get('[data-testid="modal:issue-details"]').should("contain","No time logged")
+
     });
-    it('Time logging functionality', () => {
-        
+    it('Time', () => {
+        cy.get('[data-testid="icon:stopwatch"]').click();
+
     });
+
+
 });
