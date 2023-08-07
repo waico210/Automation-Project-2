@@ -2,7 +2,8 @@ const title = 'Time Tracking test'
 const description = 'This is test issue'
 const estimatedHouers = 10
 const changedHouers = 20
-
+const timeSpent = 2
+const timeRemaining = 5
 
 describe('Time test', () => {
     before(() => {
@@ -63,10 +64,22 @@ describe('Time test', () => {
 
         cy.get('[data-testid="list-issue"]').contains(title).click();
         cy.get('[data-testid="modal:issue-details"]').should("contain","No time logged");
-        cy.get('[data-testid="modal:issue-details"]').should('contain', 'Number');
+        cy.get('input').eq(1).should('have.value', '')
         cy.get('[data-testid="icon:close"]').eq(0).click();
     });
+    
+    
     it('Time logging functionality', () => {
+        // Adding time spent and remaining time
+        cy.get('[data-testid="list-issue"]').contains(title).click();
+        cy.get('[data-testid="icon:stopwatch"]').click();
+        cy.get('[data-testid="modal:tracking"]').should('be.visible');
+        cy.get('[placeholder="Number"]').eq(1).click().type(timeSpent);
+        cy.get('[placeholder="Number"]').eq(2).click().type(timeRemaining);
+        cy.get('[data-testid="modal:tracking"]').contains('Done').click();
+        cy.get('[data-testid="list-issue"]').should("not.contain", "No time logged")
+        cy.get('[data-testid="list-issue"]').should("contain",timeSpent + 'h logged').should('contain',timeRemaining + 'h remaining');
+        
         
     });
 });
