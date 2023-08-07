@@ -76,10 +76,10 @@ describe('Time test', () => {
         cy.get('[data-testid="modal:tracking"]').should('be.visible');
         cy.get('[placeholder="Number"]').eq(1).click().type(timeSpent);
         cy.get('[placeholder="Number"]').eq(2).click().type(timeRemaining);
-        cy.get('[data-testid="modal:tracking"]').contains('Done').click();
-        cy.get('[data-testid="list-issue"]').should("not.contain", "No time logged")
-        cy.get('[data-testid="list-issue"]').should("contain",timeSpent + 'h logged').should('contain',timeRemaining + 'h remaining');
-        
+        cy.get('button').contains('Done').trigger('mouseover').click();
+        cy.get('[data-testid="modal:issue-details"]').should("not.contain", "No time logged");
+        cy.get('[data-testid="modal:issue-details"]').should("contain",timeSpent + 'h logged').should('contain',timeRemaining + 'h remaining');
+
         
     });
 });
