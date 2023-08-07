@@ -79,7 +79,13 @@ describe('Time test', () => {
         cy.get('button').contains('Done').trigger('mouseover').click();
         cy.get('[data-testid="modal:issue-details"]').should("not.contain", "No time logged");
         cy.get('[data-testid="modal:issue-details"]').should("contain",timeSpent + 'h logged').should('contain',timeRemaining + 'h remaining');
-
+        // Remove logged time
+        cy.get('[data-testid="icon:stopwatch"]').click();
+        cy.get('[data-testid="modal:tracking"]').should('be.visible');
+        cy.get('[placeholder="Number"]').eq(1).click().clear();
+        cy.get('[placeholder="Number"]').eq(2).click().clear();
+        cy.get('button').contains('Done').trigger('mouseover').click();
+        cy.get('[data-testid="modal:issue-details"]').should("contain", "No time logged");
         
     });
 });
