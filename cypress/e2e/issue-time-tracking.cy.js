@@ -49,7 +49,7 @@ describe('Time test', () => {
         cy.get('[data-testid="list-issue"]').contains(title).click();
         cy.get('[data-testid="modal:issue-details"]').should("contain", estimatedHouers + 'h estimated');
         //Change hours to 20
-        cy.get('[placeholder="Number"]').click().type(changedHouers);
+        cy.get('[placeholder="Number"]').click().clear().type(changedHouers);
         cy.get('[data-testid="icon:stopwatch"]').click();
         cy.get('[data-testid="modal:tracking"]').contains('Done').click();
         cy.get('[data-testid="icon:close"]').eq(0).click();
